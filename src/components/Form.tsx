@@ -7,17 +7,19 @@ import { Button, Box, Typography, FormHelperText } from "@mui/material";
 type FormData = { [key: string]: string | boolean };
 type FormErrors = { [key: string]: string };
 
-const fields: FieldProps[] = data.fields;
+const fields: FieldProps[] = (data as { fields: FieldProps[] }).fields;
 
 const Form: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleChange = (e: EventTypeProps) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (e: EventTypeProps | any) => {
+    const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    setFormData({ ...formData, [name]: value });
   };
-
+  
   const validateForm = () => {
     const newErrors: FormErrors = {};
 
