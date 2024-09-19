@@ -7,7 +7,7 @@ import { Button, Box, Typography } from "@mui/material";
 const fields: FieldProps[] = (data as { fields: FieldProps[] }).fields;
 
 type FormData = {
-  [key: string]: string | boolean | string[] | undefined; // Removed File type here
+  [key: string]: string | boolean | string[] | undefined; 
 };
 
 const Form: React.FC = () => {
@@ -23,7 +23,7 @@ const Form: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Data:", formData); // Log form data
+    console.log("Form Data:", formData); 
     setSubmitted(true);
   };
 
@@ -38,7 +38,7 @@ const Form: React.FC = () => {
                 name={field.name}
                 label={field.label}
                 options={field.options}
-                value={formData[field.name] ?? (field.type === 'checkbox' ? false : '')} // Default value based on field type
+                value={formData[field.name] ?? (field.type === 'checkbox' ? false : '')}
                 onChange={(value) => handleChange(field.name, value)}
               />
             </Box>
