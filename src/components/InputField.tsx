@@ -17,7 +17,7 @@ const InputField: React.FC<InputFieldProps> = ({
   label,
   name,
   value,
-  required = true,
+  required = false,
   options = [],
   onChange,
 }) => {
@@ -96,8 +96,7 @@ const InputField: React.FC<InputFieldProps> = ({
                 key={option.value}
                 value={option.value}
                 control={<Radio />}
-                    label={option.label}
-                    
+                label={option.label}
               />
             ))}
           </RadioGroup>

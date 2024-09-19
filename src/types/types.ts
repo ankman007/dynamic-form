@@ -32,4 +32,5 @@ export type FieldProps = {
   type: inputType;
   label: string;
   options?: Option[];
+  required?: boolean;
 };

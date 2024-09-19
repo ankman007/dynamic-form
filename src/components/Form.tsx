@@ -2,23 +2,50 @@ import React, { useState } from "react";
 import InputField from "./InputField";
 import data from "../data/fields.json";
 import { FieldProps, EventTypeProps } from "../types/types";
-import { Button, Box, Typography } from "@mui/material";
+import { Button, Box, Typography, FormHelperText } from "@mui/material";
 
 type FormData = { [key: string]: string | boolean };
+type FormErrors = { [key: string]: string };
+
 const fields: FieldProps[] = data.fields;
 
 const Form: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const handleChange = (e: EventTypeProps) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    const newErrors: FormErrors = {};
+
+    fields.forEach((field) => {
+      if (field.required && !formData[field.name]) {
+        newErrors[field.name] = `${field.label} is required.`;
+      }
+      if (field.type === 'email' && formData[field.name] && !/\S+@\S+\.\S+/.test(formData[field.name] as string)) {
+        newErrors[field.name] = 'Invalid email format.';
+      }
+      if (field.type === 'number' && formData[field.name] && isNaN(Number(formData[field.name]))) {
+        newErrors[field.name] = 'Value must be a number.';
+      }
+    });
+
+    return newErrors;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    setSubmitted(true);
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      console.log(formData);
+      setSubmitted(true);
+    } else {
+      setErrors(validationErrors);
+      setSubmitted(false);
+    }
   };
 
   return (
@@ -35,6 +62,9 @@ const Form: React.FC = () => {
                 onChange={handleChange}
                 options={field.options}
               />
+              {errors[field.name] && (
+                <FormHelperText error>{errors[field.name]}</FormHelperText>
+              )}
             </Box>
           ))}
           <Button

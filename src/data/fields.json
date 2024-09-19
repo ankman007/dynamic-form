@@ -17,6 +17,7 @@
         "name": "phone",
         "type": "text",
         "label": "Phone Number",
+        "required": true,
         "placeholder": "9862900388"
       },
       {
@@ -29,6 +30,7 @@
         "name": "country",
         "type": "select",
         "label": "Country",
+        "required": true,
         "options": [
           { "value": "US", "label": "United States" },
           { "value": "CA", "label": "Canada" },
@@ -38,7 +40,8 @@
       {
         "name": "subscribe",
         "type": "checkbox",
-        "label": "Do you want to receive our weekly updates?"
+        "label": "Do you want to receive our weekly updates?",
+        "required": false
       }
     ]
   }
