@@ -21,10 +21,10 @@ import { InputFieldProps } from "../types/types";
 import { validateUserInput } from "../utils/validation";
 
 const isCheckbox = (element: EventTarget | null): element is HTMLInputElement =>
-  element instanceof HTMLInputElement && element.type === 'checkbox';
+  element instanceof HTMLInputElement && element.type === "checkbox";
 
 const isRadio = (element: EventTarget | null): element is HTMLInputElement =>
-  element instanceof HTMLInputElement && element.type === 'radio';
+  element instanceof HTMLInputElement && element.type === "radio";
 
 const InputField: React.FC<InputFieldProps> = ({
   type,
@@ -34,12 +34,13 @@ const InputField: React.FC<InputFieldProps> = ({
   options = [],
   error,
   helperText,
+  onChange,
+  value,
 }) => {
-  const [localValue, setLocalValue] = useState<string | string[] | boolean>("");
   const [localError, setLocalError] = useState<string | null>(null);
 
   const handleBlur = () => {
-    const userValidation = validateUserInput(type, localValue, required, label);
+    const userValidation = validateUserInput(type, value, required, label);
     setLocalError(userValidation);
   };
 
@@ -51,21 +52,20 @@ const InputField: React.FC<InputFieldProps> = ({
     const target = event.target;
 
     if (isCheckbox(target)) {
-      setLocalValue(target.value);
+      onChange(target.checked);
     } else if (isRadio(target)) {
-      setLocalValue(target.value);
+      onChange(target.value);
     } else {
-      setLocalValue(target.value);
+      onChange(target.value);
     }
   };
 
-  const handleSelectChange = (event: SelectChangeEvent<string[] | string>) => {
-    setLocalValue(event.target.value);
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    onChange(event.target.value);
   };
 
   const handleMultiSelectChange = (event: SelectChangeEvent<string[]>) => {
-    const { value } = event.target;
-    setLocalValue(value);
+    onChange(event.target.value);
   };
 
   return (
@@ -78,7 +78,7 @@ const InputField: React.FC<InputFieldProps> = ({
           type={type}
           label={label}
           name={name}
-          value={localValue as string}
+          value={value as string}
           onChange={handleChange}
           onBlur={handleBlur}
           fullWidth
@@ -93,7 +93,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <TextField
           label={label}
           name={name}
-          value={localValue as string}
+          value={value as string}
           onChange={handleChange}
           onBlur={handleBlur}
           multiline
@@ -115,7 +115,7 @@ const InputField: React.FC<InputFieldProps> = ({
           <InputLabel>{label}</InputLabel>
           <Select
             name={name}
-            value={localValue as string}
+            value={value as string}
             onChange={handleSelectChange}
             onBlur={handleBlur}
             required={required}
@@ -141,7 +141,7 @@ const InputField: React.FC<InputFieldProps> = ({
           <Select
             multiple
             name={name}
-            value={localValue as string[]}
+            value={Array.isArray(value) ? value : []}
             onChange={handleMultiSelectChange}
             onBlur={handleBlur}
             required={required}
@@ -162,7 +162,7 @@ const InputField: React.FC<InputFieldProps> = ({
             {options.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 <Checkbox
-                  checked={(localValue as string[]).includes(option.value)}
+                  checked={(value as string[]).includes(option.value)}
                 />
                 <ListItemText primary={option.label} />
               </MenuItem>
@@ -177,7 +177,7 @@ const InputField: React.FC<InputFieldProps> = ({
           <label>{label}</label>
           <RadioGroup
             name={name}
-            value={localValue as string}
+            value={value as string}
             onChange={handleChange}
           >
             {options.map((option) => (
@@ -218,7 +218,7 @@ const InputField: React.FC<InputFieldProps> = ({
           type="date"
           label={label}
           name={name}
-          value={localValue as string}
+          value={value as string}
           onChange={handleChange}
           onBlur={handleBlur}
           fullWidth
@@ -235,7 +235,7 @@ const InputField: React.FC<InputFieldProps> = ({
           control={
             <Checkbox
               name={name}
-              checked={localValue as boolean}
+              checked={value as boolean}
               onChange={handleChange}
               required={required}
             />

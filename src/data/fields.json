@@ -38,10 +38,16 @@
       ]
     },
     {
-      "name": "subscribe",
-      "type": "checkbox",
-      "label": "Do you want to receive our weekly updates?",
-      "required": false
+      "name": "interests",
+      "type": "multi-select",
+      "label": "Interests",
+      "required": false,
+      "options": [
+        { "value": "sports", "label": "Sports" },
+        { "value": "music", "label": "Music" },
+        { "value": "travel", "label": "Travel" },
+        { "value": "reading", "label": "Reading" }
+      ]
     },
     {
       "name": "profileImage",
@@ -55,6 +61,12 @@
       "type": "date",
       "label": "Birthdate",
       "required": true
+    },
+    {
+      "name": "subscribe",
+      "type": "checkbox",
+      "label": "Do you want to receive our weekly updates?",
+      "required": false
     }
   ]
 }
