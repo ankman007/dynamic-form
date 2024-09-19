@@ -17,6 +17,7 @@ const InputField: React.FC<InputFieldProps> = ({
   label,
   name,
   value,
+  required = true,
   options = [],
   onChange,
 }) => {
@@ -33,6 +34,7 @@ const InputField: React.FC<InputFieldProps> = ({
           value={value as string}
           onChange={onChange}
           fullWidth
+          required={required}
           variant="outlined"
         />
       );
@@ -46,6 +48,7 @@ const InputField: React.FC<InputFieldProps> = ({
           multiline
           rows={4}
           fullWidth
+          required={required}
           variant="outlined"
         />
       );
@@ -58,6 +61,7 @@ const InputField: React.FC<InputFieldProps> = ({
             name={name}
             value={value as string}
             onChange={onChange}
+            required={required}
             label={label}
           >
             {options?.map((option) => (
@@ -76,6 +80,7 @@ const InputField: React.FC<InputFieldProps> = ({
               name={name}
               checked={value as boolean}
               onChange={onChange}
+              required={required}
             />
           }
           label={label}
@@ -91,7 +96,8 @@ const InputField: React.FC<InputFieldProps> = ({
                 key={option.value}
                 value={option.value}
                 control={<Radio />}
-                label={option.label}
+                    label={option.label}
+                    
               />
             ))}
           </RadioGroup>

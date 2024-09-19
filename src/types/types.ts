@@ -21,6 +21,7 @@ export type InputFieldProps = {
   type: inputType;
   label: string;
   name: string;
+  required?: boolean;
   value: string | boolean;
   options?: Option[];
   onChange: (e: EventTypeProps) => void;
