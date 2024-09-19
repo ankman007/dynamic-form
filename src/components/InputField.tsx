@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { SelectChangeEvent } from "@mui/material";
+import React from "react";
 import { InputFieldProps } from "../types/types";
-import { validateUserInput } from "../utils/validation";
 import { CheckboxComponent } from "./Checkbox/Checkbox";
 import { RadioComponent } from "./Radio/RadioComponent";
 import { SelectComponent } from "./Select/SelectComponent";
@@ -20,139 +18,101 @@ const InputField: React.FC<InputFieldProps> = ({
   onChange,
   value,
 }) => {
-  const [localError, setLocalError] = useState<string | null>(null);
 
-  const handleBlur = () => {
-    const userValidation = validateUserInput(type, value, required, label);
-    setLocalError(userValidation);
-  };
+  const renderField = () => {
+    switch (type) {
+      case "text":
+      case "email":
+      case "number":
+      case "password":
+      case "textarea":
+        return (
+          <TextFieldComponent
+            type={type === "textarea" ? "textarea" : type}
+            label={label}
+            name={name}
+            value={value as string}
+            onChange={onChange}
+            helperText={helperText}
+            required={required}
+          />
+        );
 
-  const handleChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const target = event.target;
+      case "select":
+        return (
+          <SelectComponent
+            label={label}
+            name={name}
+            value={value as string}
+            onChange={onChange}
+            options={options}
+            required={required}
+          />
+        );
 
-    if (target.type === "checkbox") {
-      handleCheckboxChange(event, target.checked); 
-    } else if (target.type === "radio") {
-      onChange(target.value);
-    } else {
-      onChange(target.value);
+      case "multi-select":
+        return (
+          <MultiSelectComponent
+            label={label}
+            name={name}
+            value={value as string[]}
+            onChange={onChange}
+            options={options}
+            required={required}
+          />
+        );
+
+      case "radio":
+        return (
+          <RadioComponent
+            label={label}
+            name={name}
+            value={value as string}
+            onChange={onChange}
+            options={options}
+            required={required}
+          />
+        );
+
+      case "checkbox":
+        return (
+          <CheckboxComponent
+            name={name}
+            label={label}
+            value={value as boolean}
+            onChange={onChange}
+            required={required}
+          />
+        );
+
+      case "file":
+      case "image":
+        return (
+          <FileUploadComponent
+            label={label}
+            name={name}
+            onChange={onChange}
+          />
+        );
+
+      case "date":
+        return (
+          <DateFieldComponent
+            label={label}
+            name={name}
+            value={value as string}
+            onChange={onChange}
+            required={required}
+            helperText={helperText}
+          />
+        );
+
+      default:
+        return null;
     }
   };
 
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    const selectedValue = event;
-    onChange(selectedValue); 
-  };
-
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => {
-    onChange(checked);
-  };
-
-  return (
-    <div>
-      {["text", "email", "number", "password"].includes(type) ? (
-        <TextFieldComponent
-          type={type}
-          label={label}
-          name={name}
-          value={value as string}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          localError={localError}
-          helperText={helperText}
-          required={required}
-        />
-      ) : null}
-
-      {type === "textarea" ? (
-        <TextFieldComponent
-          type="textarea"
-          label={label}
-          name={name}
-          value={value as string}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          localError={localError}
-          helperText={helperText}
-          required={required}
-        />
-      ) : null}
-
-      {type === "select" ? (
-        <SelectComponent
-          label={label}
-          name={name}
-          value={value as string}
-          onChange={handleSelectChange}
-          onBlur={handleBlur}
-          options={options}
-          localError={localError}
-          required={required}
-        />
-      ) : null}
-
-      {type === "multi-select" ? (
-        <MultiSelectComponent
-          label={label}
-          name={name}
-          value={value as string[]}
-          onChange={handleSelectChange}
-          options={options}
-          localError={localError}
-          required={required}
-        />
-      ) : null}
-
-      {type === "radio" ? (
-        <RadioComponent
-          label={label}
-          name={name}
-          value={value as string}
-          onChange={handleChange}
-          options={options}
-          required={required}
-        />
-      ) : null}
-
-      {["file", "image"].includes(type) ? (
-        <FileUploadComponent
-          label={label}
-          name={name}
-          onChange={handleChange}
-        />
-      ) : null}
-
-      {type === "date" ? (
-        <DateFieldComponent
-          label={label}
-          name={name}
-          value={value as string}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          required={required}
-          localError={localError}
-          helperText={helperText}
-        />
-      ) : null}
-
-      {type === "checkbox" ? (
-        <CheckboxComponent
-          name={name}
-          label={label}
-          value={value as boolean}
-          onChange={handleCheckboxChange}
-          required={false}
-        />
-      ) : null}
-    </div>
-  );
+  return <div>{renderField()}</div>;
 };
 
 export default InputField;

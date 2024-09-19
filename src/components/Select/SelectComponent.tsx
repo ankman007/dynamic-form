@@ -40,7 +40,6 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({
         name={name}
         value={value || ""}
         onChange={handleChange}
-        onBlur={handleBlur}
         required={required}
         label={label}
       >

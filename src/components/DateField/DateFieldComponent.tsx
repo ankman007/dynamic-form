@@ -7,7 +7,6 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
   name,
   value,
   onChange,
-  onBlur,
   localError = null,
   helperText,
   required = false,
@@ -35,7 +34,6 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
       name={name}
       value={value}
       onChange={handleChange}
-      onBlur={onBlur}
       fullWidth
       required={required}
       variant="outlined"

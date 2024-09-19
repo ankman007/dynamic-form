@@ -32,7 +32,7 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
       setError(`${label} is required.`);
     } else {
       setError(null);
-      setActive(true);
+      setActive(true)
     }
   };
 

@@ -8,7 +8,7 @@ export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ label,
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      if (file.size > 1000000) { 
+      if (file.size > 10000000) { 
         setError("File size exceeds 1MB.");
         return;
       }

@@ -53,7 +53,6 @@ export type CheckboxComponentProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 
   required?: boolean;
-  localError?: string | null;
 };
 
 export type RadioComponentProps = {
@@ -63,17 +62,15 @@ export type RadioComponentProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   options: Option[];
   required?: boolean;
-  localError?: string | null;
 };
 
 export type SelectComponentProps = {
   name: string;
   label: string;
-  value: string;
+  value: unknown;
   // onChange: (event: SelectChangeEvent<string>) => void;
   onChange: (value: string) => void;
   options: Option[];
-  localError?: string | null;
   required?: boolean;
 };
 
@@ -84,7 +81,6 @@ export type MultiSelectComponentProps = {
   onChange: (event: SelectChangeEvent<string[]>) => void;
   options: Option[];
   required?: boolean;
-  localError?: string | null;
 };
 
 export type TextFieldComponentProps = {
@@ -94,7 +90,7 @@ export type TextFieldComponentProps = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur?: () => void;
-  localError?: string | null;
+
   helperText?: string;
   required?: boolean;
 };
@@ -111,7 +107,6 @@ export type DateFieldComponentProps = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
-  localError?: string | null;
   helperText?: string;
   required?: boolean;
 };
