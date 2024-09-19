@@ -1,53 +1,19 @@
 import React, { useState } from "react";
 import InputField from "./InputField";
 import data from "../data/fields.json";
-import { FieldProps, EventTypeProps } from "../types/types";
-import { Button, Box, Typography, FormHelperText } from "@mui/material";
-
-type FormData = { [key: string]: string | boolean };
-type FormErrors = { [key: string]: string };
+import { FieldProps } from "../types/types";
+import { Button, Box, Typography } from "@mui/material";
 
 const fields: FieldProps[] = (data as { fields: FieldProps[] }).fields;
 
 const Form: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({});
+  // const [formData, setFormData] = useState<{ [key: string]: string | boolean }>({});
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (e: EventTypeProps | any) => {
-    const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    setFormData({ ...formData, [name]: value });
-  };
-  
-  const validateForm = () => {
-    const newErrors: FormErrors = {};
-
-    fields.forEach((field) => {
-      if (field.required && !formData[field.name]) {
-        newErrors[field.name] = `${field.label} is required.`;
-      }
-      if (field.type === 'email' && formData[field.name] && !/\S+@\S+\.\S+/.test(formData[field.name] as string)) {
-        newErrors[field.name] = 'Invalid email format.';
-      }
-      if (field.type === 'number' && formData[field.name] && isNaN(Number(formData[field.name]))) {
-        newErrors[field.name] = 'Value must be a number.';
-      }
-    });
-
-    return newErrors;
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log(formData);
-      setSubmitted(true);
-    } else {
-      setErrors(validationErrors);
-      setSubmitted(false);
-    }
+    // Process formData here if needed
+    setSubmitted(true);
   };
 
   return (
@@ -60,13 +26,8 @@ const Form: React.FC = () => {
                 type={field.type}
                 name={field.name}
                 label={field.label}
-                value={formData[field.name] || ""}
-                onChange={handleChange}
                 options={field.options}
               />
-              {errors[field.name] && (
-                <FormHelperText error>{errors[field.name]}</FormHelperText>
-              )}
             </Box>
           ))}
           <Button
@@ -74,9 +35,9 @@ const Form: React.FC = () => {
             variant="contained"
             sx={{
               marginTop: 2,
-              backgroundColor: "#065143", 
+              backgroundColor: "#065143",
               "&:hover": {
-                backgroundColor: "#129490", 
+                backgroundColor: "#129490",
               },
             }}
           >

@@ -21,6 +21,7 @@ function App() {
           boxShadow: 3, 
           backgroundColor: '#d8f3dc', 
           borderRadius: 2, 
+          margin: '10px',
         }}
       >
         <Form />

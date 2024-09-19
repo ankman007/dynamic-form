@@ -1,47 +1,60 @@
 {
-    "fields": [
-      {
-        "name": "name",
-        "type": "text",
-        "label": "Name",
-        "required": true
-      },
-      {
-        "name": "email",
-        "type": "email",
-        "label": "Email",
-        "required": true,
-        "placeholder": "ankit@email.com"
-      },
-      {
-        "name": "phone",
-        "type": "text",
-        "label": "Phone Number",
-        "required": true,
-        "placeholder": "9862900388"
-      },
-      {
-        "name": "Description",
-        "type": "textarea",
-        "label": "Description",
-        "required": true
-      },
-      {
-        "name": "country",
-        "type": "select",
-        "label": "Country",
-        "required": true,
-        "options": [
-          { "value": "US", "label": "United States" },
-          { "value": "CA", "label": "Canada" },
-          { "value": "NEP", "label": "Nepal" }
-        ]
-      },
-      {
-        "name": "subscribe",
-        "type": "checkbox",
-        "label": "Do you want to receive our weekly updates?",
-        "required": false
-      }
-    ]
-  }
+  "fields": [
+    {
+      "name": "name",
+      "type": "text",
+      "label": "Name",
+      "required": true
+    },
+    {
+      "name": "email",
+      "type": "email",
+      "label": "Email",
+      "required": true,
+      "placeholder": "ankit@email.com"
+    },
+    {
+      "name": "phone",
+      "type": "text",
+      "label": "Phone Number",
+      "required": true,
+      "placeholder": "9862900388"
+    },
+    {
+      "name": "description",
+      "type": "textarea",
+      "label": "Description",
+      "required": true
+    },
+    {
+      "name": "country",
+      "type": "select",
+      "label": "Country",
+      "required": true,
+      "options": [
+        { "value": "US", "label": "United States" },
+        { "value": "CA", "label": "Canada" },
+        { "value": "NEP", "label": "Nepal" }
+      ]
+    },
+    {
+      "name": "subscribe",
+      "type": "checkbox",
+      "label": "Do you want to receive our weekly updates?",
+      "required": false
+    },
+    {
+      "name": "profileImage",
+      "type": "file",
+      "label": "Add Profile Image",
+      "required": true,
+      "accept": "image/*"
+    },
+    {
+      "name": "birthdate",
+      "type": "date",
+      "label": "Birthdate",
+      "required": true
+    }
+  ]
+}

@@ -1,8 +1,7 @@
 import { SelectChangeEvent } from "@mui/material";
-import { ChangeEvent } from "react";
 
 
-type InputType = 'text' | 'email' | 'number' | 'password' | 'textarea' | 'select' | 'checkbox' | 'radio';
+type InputType = 'text' | 'email' | 'number' | 'password' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'file' | 'multiselect' | 'date' | 'image' | 'multi-select' | 'multiselect';
 
 
 type Option = {
@@ -10,16 +9,17 @@ type Option = {
   label: string;
 };
 
-export type EventTypeProps = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement> | SelectChangeEvent<string>;
+export type EventTypeProps = React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string> | SelectChangeEvent<string[]>;
 
 export type InputFieldProps = {
   type: InputType;
   label: string;
   name: string;
   required?: boolean;
-  value: string | boolean;
   options?: Option[];
-  onChange: (e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => void;
+  helperText?: string;
+  error?: boolean;
+  // value: string | boolean | string[];
 };
 
 export type FieldProps = {
