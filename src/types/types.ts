@@ -10,11 +10,9 @@ type InputType =
   | "checkbox"
   | "radio"
   | "file"
-  | "multiselect"
-  | "date"
-  | "image"
   | "multi-select"
-  | "multiselect";
+  | "date"
+  | "image";
 
 type Option = {
   value: string;
@@ -33,11 +31,10 @@ export type InputFieldProps = {
   label: string;
   name: string;
   required?: boolean;
-  value: string | boolean | string[];
-  options?: Option[];
-  helperText?: string;
-  error?: boolean;
-  onChange: (value: string | boolean | string[]) => void;
+  value: string | boolean | string[]; 
+  options?: Option[]; 
+  helperText?: string; 
+  onChange: (value: string | boolean | string[]) => void; 
 };
 
 export type FieldProps = {
@@ -46,5 +43,75 @@ export type FieldProps = {
   label: string;
   options?: Option[];
   required?: boolean;
-  placeholder?: string;
+  placeholder?: string; 
+};
+
+export type CheckboxComponentProps = {
+  name: string;
+  label: string;
+  value: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+
+  required?: boolean;
+  localError?: string | null;
+};
+
+export type RadioComponentProps = {
+  name: string;
+  label: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  options: Option[];
+  required?: boolean;
+  localError?: string | null;
+};
+
+export type SelectComponentProps = {
+  name: string;
+  label: string;
+  value: string;
+  // onChange: (event: SelectChangeEvent<string>) => void;
+  onChange: (value: string) => void;
+  options: Option[];
+  localError?: string | null;
+  required?: boolean;
+};
+
+export type MultiSelectComponentProps = {
+  name: string;
+  label: string;
+  value: string[];
+  onChange: (event: SelectChangeEvent<string[]>) => void;
+  options: Option[];
+  required?: boolean;
+  localError?: string | null;
+};
+
+export type TextFieldComponentProps = {
+  type: string;
+  label: string;
+  name: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur?: () => void;
+  localError?: string | null;
+  helperText?: string;
+  required?: boolean;
+};
+
+export type FileUploadComponentProps = {
+  label: string;
+  name: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type DateFieldComponentProps = {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
+  localError?: string | null;
+  helperText?: string;
+  required?: boolean;
 };

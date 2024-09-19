@@ -50,11 +50,11 @@
       ]
     },
     {
-      "name": "profileImage",
+      "name": "file",
       "type": "file",
-      "label": "Add Profile Image",
+      "label": "Add File",
       "required": true,
-      "accept": "image/*"
+      "accept": "file/*"
     },
     {
       "name": "birthdate",
