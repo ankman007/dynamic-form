@@ -14,17 +14,14 @@ const Form: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (name: string, value: any) => {
-    if (value && value.target) {
-      value = value.target.type === 'checkbox' ? value.target.checked : value.target.value;
-    }
-  
+  const handleChange = (name: string, event: any) => {
+    const { value } = event.target;
+    
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-  
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

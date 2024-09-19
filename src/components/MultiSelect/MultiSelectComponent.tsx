@@ -22,6 +22,9 @@ const MultiSelectComponent: React.FC<SelectComponentProps> = ({
   localError,
 }) => {
   const handleChange = (event: SelectChangeEvent<string[]>) => {
+    console.log("event.target.value", event.target.value);
+    // console.log('event.target', event.target)
+    // console.log('event', event)
     onChange(event.target.value);
   };
 

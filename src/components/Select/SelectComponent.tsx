@@ -22,7 +22,14 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({
   }, [value, required, label, active]);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
+    if (required && active && !value) {
+      onChange(selectedValue);
+    }
+    else {
+      onError(label, )
+    }
     const selectedValue = event.target.value;
+    console.log('selectedvalue from select', selectedValue)
     onChange(selectedValue);
   };
 
@@ -40,6 +47,7 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({
         name={name}
         value={value || ""}
         onChange={handleChange}
+        onBlur={handleBlur}
         required={required}
         label={label}
       >
