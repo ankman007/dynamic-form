@@ -1,0 +1,44 @@
+{
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "label": "Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "label": "Email",
+        "required": true,
+        "placeholder": "ankit@email.com"
+      },
+      {
+        "name": "phone",
+        "type": "text",
+        "label": "Phone Number",
+        "placeholder": "9862900388"
+      },
+      {
+        "name": "Description",
+        "type": "textarea",
+        "label": "Description",
+        "required": true
+      },
+      {
+        "name": "country",
+        "type": "select",
+        "label": "Country",
+        "options": [
+          { "value": "US", "label": "United States" },
+          { "value": "CA", "label": "Canada" },
+          { "value": "NEP", "label": "Nepal" }
+        ]
+      },
+      {
+        "name": "subscribe",
+        "type": "checkbox",
+        "label": "Do you want to receive our weekly updates?"
+      }
+    ]
+  }
