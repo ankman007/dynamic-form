@@ -8,7 +8,6 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
   value,
   onChange,
   onError,
-  helperText,
   required = false,
   error,
 }) => {
@@ -25,6 +24,8 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
+    console.log(typeof (newValue));
+      console.log('newValue', newValue);
     onChange(newValue);
     setTouched(true);
   };
@@ -40,7 +41,6 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
         fullWidth
         required={required}
         variant="outlined"
-        helperText={helperText}
         InputLabelProps={{ shrink: true }}
       />
       {error && <FormHelperText error>{error}</FormHelperText>}

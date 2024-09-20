@@ -24,7 +24,8 @@ export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
-    onChange(event, checked);
+    console.log('checked from cbc', checked);
+    onChange(checked);
 
     if (required && !checked) {
       const errorMessage = `${label} is required.`;

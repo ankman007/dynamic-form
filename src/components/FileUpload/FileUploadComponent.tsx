@@ -19,7 +19,6 @@ export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({
         onError?.(name, errorMessage);
         return;
       }
-
       onError?.(name, null); 
       onChange(file); 
     }

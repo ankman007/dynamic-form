@@ -8,7 +8,7 @@ type BaseFieldProps = {
   onError?: (name: string, error: string | null) => void;
 };
 
-type InputType =
+export type InputType =
   | "text"
   | "email"
   | "number"
@@ -27,6 +27,13 @@ type Option = {
   label: string;
 };
 
+export type FieldProps = {
+  name: string;
+  type: string;
+  label: string;
+  options?: { value: string; label: string }[];
+}
+
 export type EventTypeProps =
   | React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -35,26 +42,35 @@ export type EventTypeProps =
   | SelectChangeEvent<string[]>;
 
 export type InputFieldProps = BaseFieldProps & {
-  type: InputType;
-  value: string | boolean | string[];
+  type: string;
+  value: string | boolean | string[] | object;
   options?: Option[];
   helperText?: string;
-  onChange: (value: string | boolean | string[]) => void;
+  onChange: (value: string | boolean | string[] | object) => void;
 };
+
+export type TextFieldComponentProps = BaseFieldProps & {
+  type: string;
+  value: string; 
+  helperText?: string;
+  onChange: (value: string) => void;
+  onBlur?: () => void;
+}
 
 export type CheckboxComponentProps = BaseFieldProps & {
   value: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  onChange: (value: boolean) => void;
+
 };
 
 export type RadioComponentProps = BaseFieldProps & {
   value: string;
   options: Option[];
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
 };
 
 export type SelectComponentProps = BaseFieldProps & {
-  value: unknown;
+  value: string;
   options: Option[];
   onChange: (value: string) => void;
 };
@@ -62,20 +78,21 @@ export type SelectComponentProps = BaseFieldProps & {
 export type MultiSelectComponentProps = BaseFieldProps & {
   value: string[];
   options: Option[];
-  onChange: (event: SelectChangeEvent<string[]>) => void;
+  onChange: (value: string[]) => void;
 };
 
 export type FileUploadComponentProps = BaseFieldProps & {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: object) => void;
 };
 
 export type DateFieldComponentProps = BaseFieldProps & {
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
 };
 
+
 export type FormData = {
-  [key: string]: string | boolean | string[] | undefined;
+  [key: string]: string | boolean | string[] | object | undefined;
 };
 
 export type FormErrors = {

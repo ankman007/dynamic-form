@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@mui/material";
+import { FormHelperText, TextField } from "@mui/material";
 import { TextFieldComponentProps } from "../../types/types";
 
 export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
@@ -12,7 +12,7 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
   onError,
   helperText,
   required = false,
-  error
+  error,
 }) => {
   const [active, setActive] = useState(false);
 
@@ -27,11 +27,11 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    console.log('event.target from tfc', event.target); 
-    console.log('event from tfc', event); 
-    console.log('newValue from tfc', newValue);
+    console.log("event.target from tfc", event.target);
+    console.log("event from tfc", event);
+    console.log("newValue from tfc", newValue);
     onChange(newValue);
-    setActive(true); 
+    setActive(true);
 
     if (required && !newValue) {
       const errorMessage = `${label} is required.`;
@@ -45,7 +45,7 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
     if (onBlur) {
       onBlur();
     }
-    
+
     setActive(true);
     if (required && !value) {
       const errorMessage = `${label} is required.`;
@@ -56,18 +56,21 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
   };
 
   return (
-    <TextField
-      type={type}
-      label={label}
-      name={name}
-      value={value}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      fullWidth
-      required={required}
-      variant="outlined"
-      error={!!error}
-      helperText={error || helperText}
-    />
+    <>
+      <TextField
+        type={type}
+        label={label}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        fullWidth
+        required={required}
+        variant="outlined"
+        error={!!error}
+        helperText={error || helperText}
+      />
+      {error && <FormHelperText>{error}</FormHelperText>}
+    </>
   );
 };

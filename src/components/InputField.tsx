@@ -103,7 +103,6 @@ const InputField: React.FC<InputFieldProps> = ({
             value={value as string}
             onChange={onChange}
             required={required}
-            helperText={helperText}
           />
         );
 

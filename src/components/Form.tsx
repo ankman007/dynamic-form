@@ -18,7 +18,7 @@ const Form: React.FC = () => {
     setIsFormValid(!hasErrors && isFormComplete);
   }, [errors, formData]);
 
-  const handleChange = (name: string, value: string | boolean) => {
+  const handleChange = (name: string, value: string | boolean | object | string[]) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -30,7 +30,7 @@ const Form: React.FC = () => {
     }));
   };
 
-  const handleError = (name: string, error: string) => {
+  const handleError = (name: string, error: string | null) => {
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: error,

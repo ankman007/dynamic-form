@@ -36,10 +36,8 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({
 
     if (required && !selectedValue) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       if (onError) onError(name, errorMessage);
     } else {
-      setError(null);
       if (onError) onError(name, null);
     }
   };

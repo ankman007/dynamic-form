@@ -37,7 +37,8 @@ const MultiSelectComponent: React.FC<MultiSelectComponentProps> = ({
 
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const newValue = event.target.value;
+    const newValue = event.target.value as string[];
+    
     onChange(newValue);
 
     if (required && newValue.length === 0) {
