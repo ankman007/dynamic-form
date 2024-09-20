@@ -35,6 +35,7 @@ export type InputFieldProps = {
   options?: Option[]; 
   helperText?: string; 
   onChange: (value: string | boolean | string[]) => void; 
+  onError?: (name: string, error: string | null) => void;  
 };
 
 export type FieldProps = {
@@ -51,7 +52,7 @@ export type CheckboxComponentProps = {
   label: string;
   value: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-
+  onError?: (name: string, error: string | null) => void;  
   required?: boolean;
 };
 
@@ -60,6 +61,7 @@ export type RadioComponentProps = {
   label: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onError?: (name: string, error: string | null) => void;  
   options: Option[];
   required?: boolean;
 };
@@ -68,8 +70,8 @@ export type SelectComponentProps = {
   name: string;
   label: string;
   value: unknown;
-  // onChange: (event: SelectChangeEvent<string>) => void;
   onChange: (value: string) => void;
+  onError?: (name: string, error: string | null) => void;  
   options: Option[];
   required?: boolean;
 };
@@ -79,6 +81,7 @@ export type MultiSelectComponentProps = {
   label: string;
   value: string[];
   onChange: (event: SelectChangeEvent<string[]>) => void;
+  onError?: (name: string, error: string | null) => void;  
   options: Option[];
   required?: boolean;
 };
@@ -90,7 +93,7 @@ export type TextFieldComponentProps = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur?: () => void;
-
+  onError?: (name: string, error: string | null) => void;  
   helperText?: string;
   required?: boolean;
 };
@@ -106,7 +109,16 @@ export type DateFieldComponentProps = {
   name: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onError?: (name: string, error: string | null) => void;  
   onBlur?: () => void;
   helperText?: string;
   required?: boolean;
+};
+
+export type FormData = {
+  [key: string]: string | boolean | string[] | undefined; 
+};
+
+export type FormErrors = {
+  [key: string]: string | null;
 };

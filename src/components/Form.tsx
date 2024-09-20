@@ -1,31 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputField from "./InputField";
 import data from "../data/fields.json";
-import { FieldProps } from "../types/types";
+import { FieldProps, FormData, FormErrors } from "../types/types";
 import { Button, Box, Typography } from "@mui/material";
 
 const fields: FieldProps[] = (data as { fields: FieldProps[] }).fields;
 
-type FormData = {
-  [key: string]: string | boolean | string[] | undefined; 
-};
-
 const Form: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false); 
 
-  const handleChange = (name: string, event: any) => {
-    const { value } = event.target;
-    
+  useEffect(() => {
+    const hasErrors = Object.values(errors).some((error) => error !== null);
+    const isFormComplete = fields.every((field) => formData[field.name] !== undefined && formData[field.name] !== '');
+    setIsFormValid(!hasErrors && isFormComplete);
+  }, [errors, formData]);
+
+  const handleChange = (name: string, value: string | boolean) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: null,
+    }));
+  };
+
+  const handleError = (name: string, error: string) => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Data:", formData); 
+    console.log("Form Data:", formData);
     setSubmitted(true);
   };
 
@@ -42,6 +56,8 @@ const Form: React.FC = () => {
                 options={field.options}
                 value={formData[field.name] ?? (field.type === 'checkbox' ? false : '')}
                 onChange={(value) => handleChange(field.name, value)}
+                onError={(name, error) => handleError(name, error)}
+                error={errors[field.name] ?? ''}
               />
             </Box>
           ))}
@@ -55,6 +71,7 @@ const Form: React.FC = () => {
                 backgroundColor: "#129490",
               },
             }}
+            disabled={!isFormValid}
           >
             Submit
           </Button>

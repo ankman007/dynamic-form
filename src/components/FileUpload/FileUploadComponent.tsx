@@ -2,18 +2,28 @@ import React, { useState } from "react";
 import { Button, Box, Typography, FormHelperText } from "@mui/material";
 import { FileUploadComponentProps } from "../../types/types";
 
-export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ label, name, onChange }) => {
+export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({
+  label,
+  name,
+  onChange,
+  onError,
+}) => {
   const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    
     if (file) {
-      if (file.size > 10000000) { 
-        setError("File size exceeds 1MB.");
+      if (file.size > 100000000) {
+        const errorMessage = "File size is too big.";
+        setError(errorMessage);
+        onError?.(name, errorMessage);
         return;
       }
-      setError(null);
-      onChange(event); 
+
+      setError(null); 
+      onError?.(name, null); 
+      onChange(file); 
     }
   };
 
@@ -33,7 +43,7 @@ export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({ label,
           hidden
         />
       </Button>
-      {error && <FormHelperText error>{error}</FormHelperText>}
+      {error && <FormHelperText error>{error}</FormHelperText>} 
     </Box>
   );
 };

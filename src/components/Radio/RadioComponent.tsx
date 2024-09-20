@@ -9,27 +9,32 @@ export const RadioComponent: React.FC<RadioComponentProps> = ({
   value,
   onChange,
   required = false,
+  onError,
 }) => {
   const [error, setError] = useState<string | null>(null);
-  const [active, setActive] = useState(false);
+  const [touched, setTouched] = useState(false);
 
   useEffect(() => {
-    if (active && required && !value) {
-      setError(`Please select an option for ${label}`);
+    if (touched && required && !value) {
+      const errorMessage = `Please select an option for ${label}`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
     } else {
       setError(null);
+      onError?.(name, null);
     }
-  }, [value, required, label, active]);
+  }, [value, required, label, touched, onError, name]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
-    setActive(true); 
+    const selectedValue = event.target.value;
+    onChange(selectedValue);
+    setTouched(true);
   };
 
   return (
     <FormControl error={!!error}>
       <label>{label}</label>
-      <RadioGroup name={name} value={value} onChange={handleChange}>
+      <RadioGroup name={name} value={value || ""} onChange={handleChange}>
         {options.map((option) => (
           <FormControlLabel
             key={option.value}

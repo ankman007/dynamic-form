@@ -9,6 +9,7 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
   value,
   onChange,
   onBlur,
+  onError,
   helperText,
   required = false,
 }) => {
@@ -17,22 +18,46 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
 
   useEffect(() => {
     if (active && required && !value) {
-      setError(`${label} is required.`);
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
     } else {
       setError(null);
+      onError?.(name, null);
     }
-  }, [value, required, label]);
+  }, [value, required, label, active, onError, name]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    console.log('event.target from tfc', event.target); 
+    console.log('event from tfc', event); 
+    console.log('newValue from tfc', newValue);
+    onChange(newValue);
+    setActive(true); 
+
+    if (required && !newValue) {
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
+    } else {
+      setError(null);
+      onError?.(name, null);
+    }
+  };
 
   const handleBlur = () => {
     if (onBlur) {
       onBlur();
     }
     
+    setActive(true);
     if (required && !value) {
-      setError(`${label} is required.`);
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
     } else {
       setError(null);
-      setActive(true)
+      onError?.(name, null);
     }
   };
 
@@ -42,7 +67,7 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
       label={label}
       name={name}
       value={value}
-      onChange={onChange}
+      onChange={handleChange}
       onBlur={handleBlur}
       fullWidth
       required={required}

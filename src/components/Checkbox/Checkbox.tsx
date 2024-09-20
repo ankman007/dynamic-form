@@ -6,6 +6,7 @@ interface CustomCheckboxProps {
   label: string;
   value: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  onError?: (name: string, error: string | null) => void;
   required?: boolean;
 }
 
@@ -14,6 +15,7 @@ export const CheckboxComponent: React.FC<CustomCheckboxProps> = ({
   label,
   value,
   onChange,
+  onError,
   required = false,
 }) => {
   const [error, setError] = useState<string | null>(null);
@@ -21,20 +23,26 @@ export const CheckboxComponent: React.FC<CustomCheckboxProps> = ({
 
   useEffect(() => {
     if (active && required && !value) {
-      setError(`${label} is required.`);
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
     } else {
       setError(null);
+      onError?.(name, null);
     }
-  }, [required, value, label, active]);
+  }, [required, value, label, active, name, onError]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     onChange(event, checked);
 
     if (required && !checked) {
-      setError(`${label} is required.`);
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
     } else {
       setError(null);
+      onError?.(name, null);
       setActive(true);
     }
   };

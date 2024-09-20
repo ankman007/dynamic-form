@@ -1,42 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText, SelectChangeEvent } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  SelectChangeEvent,
+} from "@mui/material";
 import { SelectComponentProps } from "../../types/types";
 
-export const SelectComponent: React.FC<SelectComponentProps> = ({
+interface SelectComponentWithErrorProps extends SelectComponentProps {
+  onError?: (name: string, error: string | null) => void;
+}
+
+export const SelectComponent: React.FC<SelectComponentWithErrorProps> = ({
   label,
   name,
   value,
   onChange,
   options,
   required = false,
+  onError,
 }) => {
   const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
     if (active && required && !value) {
-      setError(`${label} is required.`);
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      if (onError) onError(name, errorMessage);
     } else {
       setError(null);
+      if (onError) onError(name, null);
     }
-  }, [value, required, label, active]);
+  }, [value, required, label, active, name, onError]);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    if (required && active && !value) {
-      onChange(selectedValue);
-    }
-    else {
-      onError(label, )
-    }
     const selectedValue = event.target.value;
-    console.log('selectedvalue from select', selectedValue)
+    console.log("selected value from select:", selectedValue);
     onChange(selectedValue);
+
+    if (required && !selectedValue) {
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      if (onError) onError(name, errorMessage);
+    } else {
+      setError(null);
+      if (onError) onError(name, null);
+    }
   };
 
   const handleBlur = () => {
     if (required && !value) {
-      setError(`${label} is required.`);
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
       setActive(true);
+      if (onError) onError(name, errorMessage);
     }
   };
 

@@ -7,24 +7,28 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
   name,
   value,
   onChange,
-  localError = null,
+  onError,
   helperText,
   required = false,
 }) => {
-  const [error, setError] = useState<string | null>(localError);
-  const [active, setActive] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [touched, setTouched] = useState(false);
 
   useEffect(() => {
-    if (active && required && !value) {
-      setError(`${label} is required.`);
+    if (touched && required && !value) {
+      const errorMessage = `${label} is required.`;
+      setError(errorMessage);
+      onError?.(name, errorMessage);
     } else {
       setError(null);
+      onError?.(name, null);
     }
-  }, [value, required, label, active]);
+  }, [value, required, label, touched, onError, name]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
-    setActive(true);
+    const newValue = event.target.value;
+    onChange(newValue);
+    setTouched(true);
   };
 
   return (
