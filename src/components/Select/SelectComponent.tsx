@@ -9,11 +9,7 @@ import {
 } from "@mui/material";
 import { SelectComponentProps } from "../../types/types";
 
-interface SelectComponentWithErrorProps extends SelectComponentProps {
-  onError?: (name: string, error: string | null) => void;
-}
-
-export const SelectComponent: React.FC<SelectComponentWithErrorProps> = ({
+export const SelectComponent: React.FC<SelectComponentProps> = ({
   label,
   name,
   value,
@@ -21,24 +17,21 @@ export const SelectComponent: React.FC<SelectComponentWithErrorProps> = ({
   options,
   required = false,
   onError,
+  error
 }) => {
-  const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
     if (active && required && !value) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       if (onError) onError(name, errorMessage);
     } else {
-      setError(null);
       if (onError) onError(name, null);
     }
   }, [value, required, label, active, name, onError]);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value;
-    console.log("selected value from select:", selectedValue);
     onChange(selectedValue);
 
     if (required && !selectedValue) {
@@ -54,7 +47,6 @@ export const SelectComponent: React.FC<SelectComponentWithErrorProps> = ({
   const handleBlur = () => {
     if (required && !value) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       setActive(true);
       if (onError) onError(name, errorMessage);
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Box, Typography, FormHelperText } from "@mui/material";
 import { FileUploadComponentProps } from "../../types/types";
 
@@ -7,8 +7,8 @@ export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({
   name,
   onChange,
   onError,
+  error
 }) => {
-  const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -16,12 +16,10 @@ export const FileUploadComponent: React.FC<FileUploadComponentProps> = ({
     if (file) {
       if (file.size > 100000000) {
         const errorMessage = "File size is too big.";
-        setError(errorMessage);
         onError?.(name, errorMessage);
         return;
       }
 
-      setError(null); 
       onError?.(name, null); 
       onChange(file); 
     }

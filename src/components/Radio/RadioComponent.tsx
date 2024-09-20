@@ -10,17 +10,15 @@ export const RadioComponent: React.FC<RadioComponentProps> = ({
   onChange,
   required = false,
   onError,
+  error
 }) => {
-  const [error, setError] = useState<string | null>(null);
   const [touched, setTouched] = useState(false);
 
   useEffect(() => {
     if (touched && required && !value) {
       const errorMessage = `Please select an option for ${label}`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
     }
   }, [value, required, label, touched, onError, name]);

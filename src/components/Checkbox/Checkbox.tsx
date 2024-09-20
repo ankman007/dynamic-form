@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Checkbox, FormControlLabel, FormHelperText, Box } from "@mui/material";
+import { CheckboxComponentProps } from "../../types/types";
 
-interface CustomCheckboxProps {
-  name: string;
-  label: string;
-  value: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-  onError?: (name: string, error: string | null) => void;
-  required?: boolean;
-}
-
-export const CheckboxComponent: React.FC<CustomCheckboxProps> = ({
+export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({
   name,
   label,
   value,
   onChange,
   onError,
   required = false,
+  error
 }) => {
-  const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
     if (active && required && !value) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
     }
   }, [required, value, label, active, name, onError]);
@@ -38,10 +28,8 @@ export const CheckboxComponent: React.FC<CustomCheckboxProps> = ({
 
     if (required && !checked) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
       setActive(true);
     }

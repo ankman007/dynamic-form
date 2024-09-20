@@ -1,5 +1,13 @@
 import { SelectChangeEvent } from "@mui/material";
 
+type BaseFieldProps = {
+  name: string;
+  label: string;
+  required?: boolean;
+  error?: string | null;
+  onError?: (name: string, error: string | null) => void;
+};
+
 type InputType =
   | "text"
   | "email"
@@ -26,97 +34,48 @@ export type EventTypeProps =
   | SelectChangeEvent<string>
   | SelectChangeEvent<string[]>;
 
-export type InputFieldProps = {
+export type InputFieldProps = BaseFieldProps & {
   type: InputType;
-  label: string;
-  name: string;
-  required?: boolean;
-  value: string | boolean | string[]; 
-  options?: Option[]; 
-  helperText?: string; 
-  onChange: (value: string | boolean | string[]) => void; 
-  onError?: (name: string, error: string | null) => void;  
-};
-
-export type FieldProps = {
-  name: string;
-  type: InputType;
-  label: string;
+  value: string | boolean | string[];
   options?: Option[];
-  required?: boolean;
-  placeholder?: string; 
+  helperText?: string;
+  onChange: (value: string | boolean | string[]) => void;
 };
 
-export type CheckboxComponentProps = {
-  name: string;
-  label: string;
+export type CheckboxComponentProps = BaseFieldProps & {
   value: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-  onError?: (name: string, error: string | null) => void;  
-  required?: boolean;
 };
 
-export type RadioComponentProps = {
-  name: string;
-  label: string;
+export type RadioComponentProps = BaseFieldProps & {
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onError?: (name: string, error: string | null) => void;  
   options: Option[];
-  required?: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export type SelectComponentProps = {
-  name: string;
-  label: string;
+export type SelectComponentProps = BaseFieldProps & {
   value: unknown;
+  options: Option[];
   onChange: (value: string) => void;
-  onError?: (name: string, error: string | null) => void;  
-  options: Option[];
-  required?: boolean;
 };
 
-export type MultiSelectComponentProps = {
-  name: string;
-  label: string;
+export type MultiSelectComponentProps = BaseFieldProps & {
   value: string[];
-  onChange: (event: SelectChangeEvent<string[]>) => void;
-  onError?: (name: string, error: string | null) => void;  
   options: Option[];
-  required?: boolean;
+  onChange: (event: SelectChangeEvent<string[]>) => void;
 };
 
-export type TextFieldComponentProps = {
-  type: string;
-  label: string;
-  name: string;
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onBlur?: () => void;
-  onError?: (name: string, error: string | null) => void;  
-  helperText?: string;
-  required?: boolean;
-};
-
-export type FileUploadComponentProps = {
-  label: string;
-  name: string;
+export type FileUploadComponentProps = BaseFieldProps & {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export type DateFieldComponentProps = {
-  label: string;
-  name: string;
+export type DateFieldComponentProps = BaseFieldProps & {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onError?: (name: string, error: string | null) => void;  
-  onBlur?: () => void;
-  helperText?: string;
-  required?: boolean;
 };
 
 export type FormData = {
-  [key: string]: string | boolean | string[] | undefined; 
+  [key: string]: string | boolean | string[] | undefined;
 };
 
 export type FormErrors = {

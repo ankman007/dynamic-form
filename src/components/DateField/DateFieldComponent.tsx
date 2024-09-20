@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { TextField } from '@mui/material';
-import { DateFieldComponentProps } from '../../types/types';
+import { useState, useEffect } from "react";
+import { TextField, FormHelperText } from "@mui/material";
+import { DateFieldComponentProps } from "../../types/types";
 
 export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
   label,
@@ -10,17 +10,15 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
   onError,
   helperText,
   required = false,
+  error,
 }) => {
-  const [error, setError] = useState<string | null>(null);
   const [touched, setTouched] = useState(false);
 
   useEffect(() => {
     if (touched && required && !value) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
     }
   }, [value, required, label, touched, onError, name]);
@@ -32,18 +30,20 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
   };
 
   return (
-    <TextField
-      type="date"
-      label={label}
-      name={name}
-      value={value}
-      onChange={handleChange}
-      fullWidth
-      required={required}
-      variant="outlined"
-      error={!!error}
-      helperText={error || helperText}
-      InputLabelProps={{ shrink: true }}
-    />
+    <>
+      <TextField
+        type="date"
+        label={label}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        fullWidth
+        required={required}
+        variant="outlined"
+        helperText={helperText}
+        InputLabelProps={{ shrink: true }}
+      />
+      {error && <FormHelperText error>{error}</FormHelperText>}
+    </>
   );
 };

@@ -12,17 +12,15 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
   onError,
   helperText,
   required = false,
+  error
 }) => {
-  const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
     if (active && required && !value) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
     }
   }, [value, required, label, active, onError, name]);
@@ -37,10 +35,8 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
 
     if (required && !newValue) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
     }
   };
@@ -53,10 +49,8 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
     setActive(true);
     if (required && !value) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       onError?.(name, errorMessage);
     } else {
-      setError(null);
       onError?.(name, null);
     }
   };
