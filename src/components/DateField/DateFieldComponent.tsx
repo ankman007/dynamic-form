@@ -24,8 +24,6 @@ export const DateFieldComponent: React.FC<DateFieldComponentProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    console.log(typeof (newValue));
-      console.log('newValue', newValue);
     onChange(newValue);
     setTouched(true);
   };

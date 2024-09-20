@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { FormHelperText, TextField } from "@mui/material";
+import React from "react";
+import { TextField } from "@mui/material";
 import { TextFieldComponentProps } from "../../types/types";
 
 export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
@@ -14,45 +14,23 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
   required = false,
   error,
 }) => {
-  const [active, setActive] = useState(false);
 
-  useEffect(() => {
-    if (active && required && !value) {
-      const errorMessage = `${label} is required.`;
-      onError?.(name, errorMessage);
-    } else {
-      onError?.(name, null);
+  const validate = (value: string) => {
+    if (required && !value) {
+      return `${label} is required.`;
     }
-  }, [value, required, label, active, onError, name]);
+    return null;
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    console.log("event.target from tfc", event.target);
-    console.log("event from tfc", event);
-    console.log("newValue from tfc", newValue);
     onChange(newValue);
-    setActive(true);
-
-    if (required && !newValue) {
-      const errorMessage = `${label} is required.`;
-      onError?.(name, errorMessage);
-    } else {
-      onError?.(name, null);
-    }
+    onError?.(name, validate(newValue));  
   };
 
   const handleBlur = () => {
-    if (onBlur) {
-      onBlur();
-    }
-
-    setActive(true);
-    if (required && !value) {
-      const errorMessage = `${label} is required.`;
-      onError?.(name, errorMessage);
-    } else {
-      onError?.(name, null);
-    }
+    if (onBlur) onBlur();
+    onError?.(name, validate(value));  
   };
 
   return (
@@ -70,7 +48,6 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
         error={!!error}
         helperText={error || helperText}
       />
-      {error && <FormHelperText>{error}</FormHelperText>}
     </>
   );
 };

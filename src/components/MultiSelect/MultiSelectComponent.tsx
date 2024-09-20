@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Select,
   MenuItem,
@@ -21,33 +21,26 @@ const MultiSelectComponent: React.FC<MultiSelectComponentProps> = ({
   options,
   required = false,
   onError,
-  error
+  error,
 }) => {
   const selectedValues = Array.isArray(value) ? value : [];
-  const [active, setActive] = useState(false);
+
+  const validate = (values: string[]) => {
+    if (required && values.length === 0) {
+      return `${label} is required.`;
+    }
+    return null;
+  };
 
   useEffect(() => {
-    if (active && required && selectedValues.length === 0) {
-      const error = `${label} is required.`;
-      if (onError) onError(name, error);
-    } else {
-      if (onError) onError(name, null);
-    }
-  }, [selectedValues, required, label, name, onError]);
-
+    onError?.(name, validate(selectedValues));
+  }, []);
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newValue = event.target.value as string[];
-    
     onChange(newValue);
 
-    if (required && newValue.length === 0) {
-      const errorMessage = `${label} is required.`;
-      if (onError) onError(name, errorMessage);
-    } else {
-      if (onError) onError(name, null);
-      setActive(true);
-    }
+    onError?.(name, validate(newValue));
   };
 
   return (
@@ -63,7 +56,10 @@ const MultiSelectComponent: React.FC<MultiSelectComponentProps> = ({
             {(selected as string[]).map((selectedValue) => (
               <Chip
                 key={selectedValue}
-                label={options.find((option) => option.value === selectedValue)?.label}
+                label={
+                  options.find((option) => option.value === selectedValue)
+                    ?.label
+                }
               />
             ))}
           </Box>

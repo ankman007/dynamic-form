@@ -19,6 +19,7 @@ const Form: React.FC = () => {
   }, [errors, formData]);
 
   const handleChange = (name: string, value: string | boolean | object | string[]) => {
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -31,6 +32,7 @@ const Form: React.FC = () => {
   };
 
   const handleError = (name: string, error: string | null) => {
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: error,

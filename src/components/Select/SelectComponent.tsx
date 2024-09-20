@@ -17,7 +17,7 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({
   options,
   required = false,
   onError,
-  error
+  error,
 }) => {
   const [active, setActive] = useState(false);
 
@@ -30,24 +30,22 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({
     }
   }, [value, required, label, active, name, onError]);
 
+  const validate = (value: string) => {
+    if (required && !value) {
+      return `${label} is required.`;
+    }
+    return null;
+  }
+
   const handleChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value;
     onChange(selectedValue);
-
-    if (required && !selectedValue) {
-      const errorMessage = `${label} is required.`;
-      if (onError) onError(name, errorMessage);
-    } else {
-      if (onError) onError(name, null);
-    }
+    if (onError) onError(name, validate(selectedValue));
   };
 
   const handleBlur = () => {
-    if (required && !value) {
-      const errorMessage = `${label} is required.`;
-      setActive(true);
-      if (onError) onError(name, errorMessage);
-    }
+    setActive(true);
+    if (onError) onError(name, validate(value));
   };
 
   return (

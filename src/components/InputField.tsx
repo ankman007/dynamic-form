@@ -17,6 +17,8 @@ const InputField: React.FC<InputFieldProps> = ({
   helperText,
   onChange,
   value,
+  onError,
+  error
 }) => {
 
   const renderField = () => {
@@ -35,6 +37,8 @@ const InputField: React.FC<InputFieldProps> = ({
             onChange={onChange}
             helperText={helperText}
             required={required}
+            onError={onError}  
+            error={error} 
           />
         );
 
@@ -47,6 +51,8 @@ const InputField: React.FC<InputFieldProps> = ({
             onChange={onChange}
             options={options}
             required={required}
+            onError={onError}  
+            error={error} 
           />
         );
 
@@ -59,6 +65,8 @@ const InputField: React.FC<InputFieldProps> = ({
             onChange={onChange}
             options={options}
             required={required}
+            onError={onError}  
+            error={error} 
           />
         );
 
@@ -71,6 +79,8 @@ const InputField: React.FC<InputFieldProps> = ({
             onChange={onChange}
             options={options}
             required={required}
+            onError={onError}  
+            error={error} 
           />
         );
 
@@ -82,6 +92,8 @@ const InputField: React.FC<InputFieldProps> = ({
             value={value as boolean}
             onChange={onChange}
             required={required}
+            onError={onError}  
+            error={error} 
           />
         );
 
@@ -92,6 +104,8 @@ const InputField: React.FC<InputFieldProps> = ({
             label={label}
             name={name}
             onChange={onChange}
+            onError={onError}  
+            error={error} 
           />
         );
 
@@ -103,6 +117,8 @@ const InputField: React.FC<InputFieldProps> = ({
             value={value as string}
             onChange={onChange}
             required={required}
+            onError={onError}  
+            error={error} 
           />
         );
 
