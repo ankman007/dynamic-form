@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   MenuItem,
@@ -21,22 +21,20 @@ const MultiSelectComponent: React.FC<MultiSelectComponentProps> = ({
   options,
   required = false,
   onError,
+  error
 }) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const selectedValues = Array.isArray(value) ? value : [];
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
-    if (required && selectedValues.length === 0) {
+    if (active && required && selectedValues.length === 0) {
       const error = `${label} is required.`;
-      setError(error);
       if (onError) onError(name, error);
     } else {
-      setError(null);
       if (onError) onError(name, null);
     }
   }, [selectedValues, required, label, name, onError]);
 
-  const [error, setError] = React.useState<string | null>('');
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newValue = event.target.value;
@@ -44,11 +42,10 @@ const MultiSelectComponent: React.FC<MultiSelectComponentProps> = ({
 
     if (required && newValue.length === 0) {
       const errorMessage = `${label} is required.`;
-      setError(errorMessage);
       if (onError) onError(name, errorMessage);
     } else {
-      setError(null);
       if (onError) onError(name, null);
+      setActive(true);
     }
   };
 
